@@ -20,7 +20,8 @@ class AddProject extends Component {
       newProject: {
         id: uuid.v4(),
         title: this.refs.title.value,
-        category: this.refs.category.value
+        category: this.refs.category.value,
+        todos: []
       }
     }, function(){
       this.props.AddProject(this.state.newProject);

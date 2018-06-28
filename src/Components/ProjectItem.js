@@ -6,10 +6,15 @@ class ProjectItem extends Component {
     this.props.onDelete(id);
   }
 
+  activateProject(id){
+    this.props.activateProject(id);
+  }
+
+
   render() {
     return (
       <li className="Projects">
-        {this.props.project.title}: {this.props.project.category} <button onClick={this.deleteProject.bind(this, this.props.project.id)}>delete</button>
+        {this.props.project.title}: {this.props.project.category} <button onClick={this.activateProject.bind(this, this.props.project.id)}>Aufgaben</button> <button onClick={this.deleteProject.bind(this, this.props.project.id)}>löschen</button>
       </li>
     );
   }
@@ -17,7 +22,8 @@ class ProjectItem extends Component {
 
 ProjectItem.propTypes = {
   project: PropTypes.object,
-  onDelete: PropTypes.func
+  onDelete: PropTypes.func,
+  activateProject: PropTypes.func
 }
 
 export default ProjectItem;

@@ -8,12 +8,16 @@ class Projects extends Component {
     this.props.onDelete(id);
   }
 
+  activateProject(id){
+    this.props.activateProject(id);
+  }
+
   render() {
     let ProjectItems;
     if(this.props.projects) {
       ProjectItems = this.props.projects.map(project => {
         return(
-          <ProjectItem onDelete={this.deleteProject.bind(this)} key={project.id} project={project} />
+          <ProjectItem activateProject={this.activateProject.bind(this)} onDelete={this.deleteProject.bind(this)} key={project.id} project={project} />
         );
       });
     }
