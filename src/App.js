@@ -67,13 +67,16 @@ class App extends Component {
   handleAddProject(project){
     let projects = this.state.projects;
     projects.push(project);
-    this.setState({projects: projects, activeProject: this.state.activeProject});
+    this.setState({projects: projects, activeProject: project.id});
   }
 
   handleDeleteProject(id){
     let projects = this.state.projects;
     let index = projects.findIndex(x => x.id === id);
     projects.splice(index, 1);
+    if(this.state.activeProject === id && projects.length > 0)
+      this.state.activeProject = projects[0].id;
+
     this.setState({projects: projects, activeProject: this.state.activeProject});
   }
 
@@ -93,18 +96,24 @@ class App extends Component {
   handleAddTodo(todo){
     let projects = this.state.projects;
     let projectIndex = this.state.projects.findIndex(x => x.id === this.state.activeProject);
-    projects[projectIndex].todos.push(todo);
-    this.setState({projects: projects, activeProject: this.state.activeProject});
+    if(projectIndex !== -1) {
+      projects[projectIndex].todos.push(todo);
+      this.setState({projects: projects, activeProject: this.state.activeProject});
+    }
   }
 
   render() {
     let index = this.state.projects.findIndex(x => x.id === this.state.activeProject);
+    let todos = [];
+    if(index !== -1) {
+      todos = this.state.projects[index].todos;
+    }
     return (
       <div className="App">
         <AddProject AddProject={this.handleAddProject.bind(this)} />
         <Projects projects={this.state.projects} onDelete={this.handleDeleteProject.bind(this)} activateProject={this.handleactivateProject.bind(this)}/>
         <AddTodo AddTodo={this.handleAddTodo.bind(this)} />
-        <Todos todos={this.state.projects[index].todos} onDelete={this.handleDeleteTodo.bind(this)}/>
+        <Todos todos={todos} onDelete={this.handleDeleteTodo.bind(this)}/>
       </div>
     );
   }
